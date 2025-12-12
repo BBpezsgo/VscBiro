@@ -1,6 +1,7 @@
 {
   "name": "vscbiro",
-  "displayName": "VscBiro",
+  "displayName": "Bíró 3",
+  "icon": "assets/icon.png",
   "description": "",
   "version": "0.0.1",
   "engines": {

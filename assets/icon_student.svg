@@ -1,0 +1,68 @@
+<svg width="2134" height="2134" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden" shape-rendering="geometricPrecision">
+    <defs>
+        <filter id="fx0" x="-10%" y="-10%" width="120%" height="120%" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse">
+            <feComponentTransfer color-interpolation-filters="sRGB">
+                <feFuncR type="discrete" tableValues="0 0"/>
+                <feFuncG type="discrete" tableValues="0 0"/>
+                <feFuncB type="discrete" tableValues="0 0"/>
+                <feFuncA type="linear" slope="0.2" intercept="0"/>
+            </feComponentTransfer>
+            <feGaussianBlur stdDeviation="6.11111 6.11111"/>
+        </filter>
+        <filter id="fx1" x="-10%" y="-10%" width="120%" height="120%" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse">
+            <feComponentTransfer color-interpolation-filters="sRGB">
+                <feFuncR type="discrete" tableValues="0 0"/>
+                <feFuncG type="discrete" tableValues="0 0"/>
+                <feFuncB type="discrete" tableValues="0 0"/>
+                <feFuncA type="linear" slope="0.2" intercept="0"/>
+            </feComponentTransfer>
+            <feGaussianBlur stdDeviation="6.11111 6.11111"/>
+        </filter>
+        <filter id="fx2" x="-10%" y="-10%" width="120%" height="120%" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse">
+            <feComponentTransfer color-interpolation-filters="sRGB">
+                <feFuncR type="discrete" tableValues="0 0"/>
+                <feFuncG type="discrete" tableValues="0 0"/>
+                <feFuncB type="discrete" tableValues="0 0"/>
+                <feFuncA type="linear" slope="0.2" intercept="0"/>
+            </feComponentTransfer>
+            <feGaussianBlur stdDeviation="6.11111 6.11111"/>
+        </filter>
+        <filter id="fx3" x="-10%" y="-10%" width="120%" height="120%" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse">
+            <feComponentTransfer color-interpolation-filters="sRGB">
+                <feFuncR type="discrete" tableValues="0 0"/>
+                <feFuncG type="discrete" tableValues="0 0"/>
+                <feFuncB type="discrete" tableValues="0 0"/>
+                <feFuncA type="linear" slope="0.2" intercept="0"/>
+            </feComponentTransfer>
+            <feGaussianBlur stdDeviation="6.11111 6.11111"/>
+        </filter>
+        <clipPath id="clip4"><rect x="1133" y="171" width="2134" height="2134"/>
+        </clipPath>
+        <defs>
+            <linearGradient id="grad1" x1="85%" y1="15%" x2="15%" y2="100%">
+                <stop offset="0%" style="stop-color:#b5a1f8;stop-opacity:1"/>
+                <stop offset="5%" style="stop-color:#947ee3;stop-opacity:1"/>
+                <stop offset="25%" style="stop-color:#a58ef6;stop-opacity:1"/>
+                <stop offset="45%" style="stop-color:#d3c4fa;stop-opacity:1"/>
+                <stop offset="65%" style="stop-color:#a58ef6;stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:#947ee3;stop-opacity:1"/>
+            </linearGradient>
+            <linearGradient id="grad2" x1="15%" y1="15%" x2="85%" y2="100%">
+                <stop offset="0%" style="stop-color:#3f51b5;stop-opacity:1"/>
+            </linearGradient>
+        </defs>
+    </defs>
+    <g clip-path="url(#clip4)" transform="translate(-1133 -171)"><path d="M1133 1238C1133 648.712 1610.71 171 2200 171 2789.29 171 3267 648.712 3267 1238 3267 1827.29 2789.29 2305 2200 2305 1610.71 2305 1133 1827.29 1133 1238Z" fill="url(#grad1)" fill-rule="evenodd"/>
+        <path d="M1212 1237.5C1212 692.119 1654.34 250 2200 250 2745.66 250 3188 692.119 3188 1237.5 3188 1782.88 2745.66 2225 2200 2225 1654.34 2225 1212 1782.88 1212 1237.5Z" fill="#FFFFFF" fill-rule="evenodd"/>
+        <g filter="url(#fx0)" transform="translate(1761 1830)"><g><path d="M121.252 19.7039 771.252 19.7039C798.866 19.7039 821.252 42.0896 821.252 69.7039L821.252 119.704 71.2517 119.704 71.2517 69.7039C71.2517 42.0896 93.6375 19.7039 121.252 19.7039Z" fill="url(#grad2)" fill-rule="evenodd"/><path d="M91.2515 116.704 799.252 116.704C838.464 116.704 870.252 148.492 870.252 187.704L870.252 258.704 20.2518 258.704 20.2518 187.704C20.2518 148.492 52.0395 116.704 91.2515 116.704Z" fill="#3358B6" fill-rule="evenodd"/></g></g>
+        <path d="M1876 1843 2526 1843C2553.61 1843 2576 1865.39 2576 1893L2576 1943 1826 1943 1826 1893C1826 1865.39 1848.39 1843 1876 1843Z" fill="url(#grad2)" fill-rule="evenodd"/>
+        <path d="M1846 1940 2554 1940C2593.21 1940 2625 1971.79 2625 2011L2625 2082 1775 2082 1775 2011C1775 1971.79 1806.79 1940 1846 1940Z" fill="url(#grad2)" fill-rule="evenodd"/>
+        <g filter="url(#fx1)" transform="translate(1479 576)"><g><path d="M216.056 1127.38 20.2252 905.677 769.33 322.94 886.828 455.965Z" fill="url(#grad2)" fill-rule="evenodd"/><path d="M1201.59 351.608 947.346 577.799 652.651 246.552 906.896 20.3616Z" fill="url(#grad2)" fill-rule="evenodd"/></g></g>
+        <path d="M1688.8 1696.68 1492.97 1474.97 2242.08 892.236 2359.58 1025.26Z" fill="url(#grad2)" fill-rule="evenodd"/>
+        <path d="M2674.34 920.904 2420.09 1147.09 2125.4 815.848 2379.64 589.658Z" fill="url(#grad2)" fill-rule="evenodd"/>
+        <g filter="url(#fx2)" transform="translate(2345 868)"><g><path d="M41.8664 470.947C9.55938 434.694 12.7585 379.115 49.0118 346.808L391.132 41.9289C427.385 9.62189 482.964 12.821 515.271 49.0743L515.271 49.0748C547.578 85.3281 544.379 140.907 508.125 173.214L166.005 478.092C129.752 510.399 74.1729 507.2 41.8659 470.947Z" fill="url(#grad2)" fill-rule="evenodd"/></g></g>
+        <path d="M2386.87 1320.61C2354.56 1284.36 2357.76 1228.78 2394.01 1196.47L2736.13 891.596C2772.39 859.289 2827.96 862.488 2860.27 898.741L2860.27 898.742C2892.58 934.995 2889.38 990.574 2853.13 1022.88L2511.01 1327.76C2474.75 1360.07 2419.17 1356.87 2386.87 1320.61Z" fill="url(#grad2)" fill-rule="evenodd"/>
+        <g filter="url(#fx3)" transform="translate(1904 383)"><g><path d="M42.3718 470.4C10.6554 434.81 13.7959 380.246 49.3864 348.53L393.906 41.5126C429.497 9.79626 484.06 12.937 515.776 48.5276L515.776 48.5276C547.493 84.1182 544.352 138.681 508.761 170.398L164.242 477.415C128.651 509.131 74.0882 505.991 42.3718 470.4Z" fill="url(#grad2)" fill-rule="evenodd"/></g></g>
+        <path d="M1946.37 835.067C1914.66 799.476 1917.8 744.913 1953.39 713.197L2297.91 406.179C2333.5 374.463 2388.06 377.604 2419.78 413.194L2419.78 413.194C2451.49 448.785 2448.35 503.348 2412.76 535.064L2068.24 842.082C2032.65 873.798 1978.09 870.657 1946.37 835.067Z" fill="url(#grad2)" fill-rule="evenodd"/>
+        <path d="M2303.59 878.307C2291.28 863.588 2295.31 839.944 2312.58 825.494L2312.58 825.494C2329.86 811.045 2333.88 787.401 2321.57 772.682 2333.88 787.401 2357.86 787.619 2375.14 773.17L2375.14 773.17C2392.41 758.721 2416.4 758.94 2428.71 773.659" stroke="#FFFFFF" stroke-width="20.625" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
+        <path d="M2502.95 856.616C2515.61 871.032 2512.16 894.768 2495.24 909.632L2495.24 909.632C2478.32 924.496 2474.88 948.232 2487.54 962.647 2474.88 948.232 2450.89 948.595 2433.97 963.459L2433.97 963.459C2417.05 978.323 2393.07 978.687 2380.41 964.271" stroke="#FFFFFF" stroke-width="20.625" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/></g></svg>

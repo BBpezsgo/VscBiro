@@ -1,0 +1,85 @@
+{
+  "name": "vscbiro",
+  "displayName": "VscBiro",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.107.0"
+  },
+  "publisher": "banszky",
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "url": "https://github.com/BBpezsgo/VscBiro"
+  },
+  "bugs": {
+    "url": "https://github.com/BBpezsgo/VscBiro/issues"
+  },
+  "homepage": "https://github.com/BBpezsgo/VscBiro",
+  "preview": true,
+  "author": {
+    "name": "Bánszky",
+    "url": "https://github.com/BBpezsgo"
+  },
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscbiro.refreshSubjectInstances"
+      },
+      {
+        "command": "vscbiro.showExerciseInfo"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "biro-explorer",
+          "title": "Bíró 3",
+          "icon": "assets/icon_student2.svg"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "vscbiro.refreshSubjectInstances",
+          "when": "view == biroExplorer",
+          "group": "navigation"
+        }
+      ]
+    },
+    "views": {
+      "biro-explorer": [
+        {
+          "id": "biroExplorer",
+          "name": "Bíró3"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/marked": "^5.0.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.107.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1"
+  },
+  "dependencies": {
+    "marked": "^17.0.1"
+  }
+}

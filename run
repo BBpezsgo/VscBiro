@@ -1,0 +1,2 @@
+#!/bin/sh
+code --extensions-dir=./.temp/extensions --user-data-dir=./.temp/

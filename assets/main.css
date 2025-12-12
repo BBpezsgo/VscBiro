@@ -1,0 +1,43 @@
+.story {
+    border: 1px solid #A94CE4;
+    padding: 8px;
+    margin: 16px 0;
+    color: #b97ee0;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.story::before {
+	content: "STORY";
+	color: #c781f0;
+	font-weight: 600;
+	display: block;
+	-webkit-user-select: auto;
+	user-select: auto;
+	margin-bottom: 4px;
+}
+
+.example {
+    border: 1px dotted #497F3F;
+    padding: 5px;
+    margin: 16px 0;
+    color: #50bd3c;
+    font-style: italic;
+    line-height: 2;
+}
+
+.example::before {
+	content: "PÉLDA";
+	color: #50bd3c;
+	font-weight: 600;
+	display: block;
+	-webkit-user-select: auto;
+	user-select: auto;
+}
+
+img.story {
+    width: 50%;
+    margin: 20px auto;
+    max-width: calc(100vw - 80px);
+    display: block;
+}

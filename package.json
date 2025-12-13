@@ -31,32 +31,49 @@
         "command": "vscbiro.refreshSubjectInstances"
       },
       {
-        "command": "vscbiro.showExerciseInfo"
+        "command": "vscbiro.selectExercise"
+      },
+      {
+        "command": "vscbiro.showSubmission"
+      },
+      {
+        "command": "vscbiro.openSubmittedFile"
+      },
+      {
+        "command": "vscbiro.submit",
+        "title": "Fájl feltöltése",
+        "icon": "$(cloud-upload)"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "biro-explorer",
+          "id": "biro-menu",
           "title": "Bíró 3",
           "icon": "assets/icon_student2.svg"
         }
       ]
     },
-    "menus": {
-      "view/title": [
+    "views": {
+      "biro-menu": [
         {
-          "command": "vscbiro.refreshSubjectInstances",
-          "when": "view == biroExplorer",
-          "group": "navigation"
+          "id": "biro-courses",
+          "name": "Kurzusok"
+        }
+      ],
+      "explorer": [
+        {
+          "id": "biro-exercises",
+          "name": "Feltöltések"
         }
       ]
     },
-    "views": {
-      "biro-explorer": [
+    "menus": {
+      "editor/title": [
         {
-          "id": "biroExplorer",
-          "name": "Bíró3"
+          "command": "vscbiro.submit",
+          "when": "vscbiro.allowSubmission",
+          "group": "navigation"
         }
       ]
     }

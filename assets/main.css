@@ -41,3 +41,52 @@ img.story {
     max-width: calc(100vw - 80px);
     display: block;
 }
+
+.file,
+.report {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.report .message,
+.file .content {
+	font-size: var(--vscode-editor-font-size);
+	font-family: var(--vscode-editor-font-family);
+    background-color: var(--vscode-textPreformat-background);
+    padding: 1px 3px;
+    color: var(--vscode-textPreformat-foreground);
+    word-wrap: break-word;
+    text-wrap: auto;
+    margin: 0px;
+}
+
+.submission {
+    border: 1px solid var(--vscode-input-border);
+    padding: 4px;
+}
+
+.submission h3 {
+    margin: 4px;
+}
+
+.submission h4 {
+    margin: 4px;
+}
+
+.submission h3 .submission-score,
+.submission h3 .submission-time {
+    font-weight: 500;
+    color: var(--vscode-descriptionForeground);
+}
+
+.score.success {
+    color: #4CAF50;
+}
+
+.score.almost {
+    color: #F9A825;
+}
+
+.score.fail {
+    color: #E53935;
+}

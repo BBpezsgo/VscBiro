@@ -1,4 +1,4 @@
-import typescriptEslint from "typescript-eslint";
+import typescriptEslint from "typescript-eslint"
 
 export default [{
     files: ["**/*.ts"],
@@ -22,6 +22,6 @@ export default [{
         curly: "warn",
         eqeqeq: "warn",
         "no-throw-literal": "warn",
-        semi: "warn",
+        semi: "off",
     },
-}];
+}]

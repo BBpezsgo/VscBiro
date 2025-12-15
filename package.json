@@ -28,16 +28,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscbiro.refreshSubjectInstances"
+        "command": "vscbiro.selectExercise",
+        "title": "Feladat megnyitása"
       },
       {
-        "command": "vscbiro.selectExercise"
-      },
-      {
-        "command": "vscbiro.showSubmission"
-      },
-      {
-        "command": "vscbiro.openSubmittedFile"
+        "command": "vscbiro.openSubmittedFile",
+        "title": "Feltöltött fájl megtekintése"
       },
       {
         "command": "vscbiro.submit",
@@ -58,13 +54,9 @@
       "biro-menu": [
         {
           "id": "biro-courses",
-          "name": "Kurzusok"
-        }
-      ],
-      "explorer": [
-        {
-          "id": "biro-exercises",
-          "name": "Feltöltések"
+          "icon": "assets/class.svg",
+          "name": "Kurzusok",
+          "contextualTitle": "Bíró Kurzusok"
         }
       ]
     },
@@ -82,9 +74,7 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src",
-    "test": "vscode-test"
+    "lint": "eslint src"
   },
   "devDependencies": {
     "@types/marked": "^5.0.2",

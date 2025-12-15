@@ -92,14 +92,14 @@ export interface Submission {
     readonly submissionId: number
     readonly name: string
     readonly score: number
-    readonly status: string
+    readonly status: "EVALUATED" | "UNDER_EVALUATION" | "ERROR" | string
     readonly submissionTime: string
     readonly ipAddress: string
     readonly evaluations: ReadonlyArray<Evaluation>
 }
 
 export interface SubmissionStatus {
-    state: "ERROR" | string
+    state: "EVALUATED" | "UNDER_EVALUATION" | "ERROR" | string
     finished: boolean
     score: number
     maxScore: number

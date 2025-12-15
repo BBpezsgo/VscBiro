@@ -42,7 +42,7 @@ export default class ExercisePanel {
 
         this.panel.onDidChangeViewState(async () => {
             if (this.panel.visible) {
-                await this.update()
+                await this.update(true)
             }
         }, null, this.disposables)
 
@@ -53,13 +53,13 @@ export default class ExercisePanel {
                         if (this.exerciseId === null) { return }
                         log.debug(`Refreshing submissions for exercise webview ${exerciseId}`)
                         await this.client.withReauth(() => this.client.getExercise(this.exerciseId ?? 0))
-                        await this.update()
+                        await this.update(true)
                         return
                     case 'fetch-reports':
                         if (this.exerciseId === null) { return }
                         log.debug(`Refreshing reports for exercise webview ${exerciseId}`)
                         await this.client.withReauth(() => this.client.getReports(message.evaluationId))
-                        await this.update()
+                        await this.update(true)
                         return
                     case 'open-file':
                         if (this.exerciseId === null) { return }
@@ -97,19 +97,19 @@ export default class ExercisePanel {
             log.debug(`Revealing exercise webview`)
             this.panel.reveal(vscode.ViewColumn.Beside)
 
-            this.update()
+            this.update(true)
         } else {
             log.debug(`Revealing exercise webview ${exerciseId}`)
             this.panel.reveal(vscode.ViewColumn.Beside)
 
             if (this.exerciseId !== exerciseId) {
                 this.exerciseId = exerciseId
-                this.update()
+                this.update(true)
             }
         }
     }
 
-    private async update() {
+    public async update(clearContent: boolean) {
         if (this.exerciseId === null) {
             return
         }
@@ -122,13 +122,18 @@ export default class ExercisePanel {
         this.lock = new Promise(v => unlock = v)
 
         try {
-            this.panel.webview.html = `Loading ...`
+            if (clearContent) {
+                this.panel.webview.html = `Loading ...`
+            }
 
             const exercise = await this.client.withReauth(() => this.client.getExercise(this.exerciseId ?? 0))
 
             const tasks: Array<Promise<any>> = []
             let shouldRefreshLater = false
             for (const submission of exercise.submissions) {
+                if (submission.status === "UNDER_EVALUATION") {
+                    shouldRefreshLater = true
+                }
                 tasks.push(this.client.withReauth(async () => {
                     const v = await this.client.getSubmissionStatus(submission.submissionId)
                     if (!v.finished) {
@@ -141,12 +146,29 @@ export default class ExercisePanel {
                     tasks.push(this.client.withReauth(() => this.client.getReports(evaluation.evaluationId)))
                 }
             }
+            if (shouldRefreshLater) {
+                log.debug(`Exercise webview will refresh later`)
+            }
             Promise.allSettled(tasks)
                 .then(() => {
                     if (shouldRefreshLater && this.exerciseId === exercise.assignedExerciseId) {
                         setTimeout(() => {
                             if (this.exerciseId === exercise.assignedExerciseId) {
-                                this.update()
+                                for (const submission of exercise.submissions) {
+                                    if (!this.client.submissionStatuses[submission.submissionId].finished) {
+                                        delete this.client.submissionStatuses[submission.submissionId]
+                                        for (const evaluation of submission.evaluations) {
+                                            delete this.client.reports[evaluation.evaluationId]
+                                        }
+                                    }
+                                    if (submission.status === "UNDER_EVALUATION") {
+                                        delete this.client.exercises[exercise.assignedExerciseId]
+                                    }
+                                }
+                                log.debug(`Exercise webview is automatically refreshing`)
+                                this.update(false)
+                            } else {
+                                log.warn(`Exercise webview changed, will not refresh`)
                             }
                         }, 1000)
                         this.refreshHtml(exercise)
@@ -190,12 +212,30 @@ export default class ExercisePanel {
 				<title>Cat Coding</title>
 			</head>
 			<body>
-				<h1>${exercise.indexInTaskList}. ${exercise.displayName} (${exercise.maxScore} pont)${({
-                "LOCKED": " <span class=\"exercise-warning exercise-locked\">LOCKED</span>",
-                "VIEW_ONLY": " <span class=\"exercise-warning exercise-readonly\">READONLY</span>",
-                "SUBMIT_WITH_NO_POINTS": "",
-                "": "",
-            })[assignment?.postDeadlineHandling ?? ""]}</h1>
+				<h1>${exercise.indexInTaskList}. ${exercise.displayName} (${exercise.maxScore} pont)</h1>
+                ${(() => {
+                    if (!assignment) { return '' }
+
+                    const startTime = Date.parse(assignment.startTime)
+                    const endTime = Date.parse(assignment.endTime)
+                    const now = Date.now()
+
+                    if (now < startTime) {
+                        return `
+                            <div class="assignment-locked">
+                                <h2>A feladat ${(startTime - now)} ms múlva lesz elérhető</h2>
+                            </div>
+                        `
+                    } else if (now < endTime) {
+                        return ''
+                    } else {
+                        return `
+                            <div class="assignment-locked">
+                                <h2>A feladat határideje lejárt!</h2>
+                            </div>
+                        `
+                    }
+                })()}
                 <div class="debug">
                     <b>Típus:</b> ${exercise.type} <br>
                     <b>Nehézség:</b> ${exercise.difficultyLevel} <br>
@@ -214,7 +254,7 @@ export default class ExercisePanel {
 									${v.message}
 									${this.client.reports[v.evaluationId] ? `<div class="reports">
 										${this.client.reports[v.evaluationId].map(v => typeof v.content === 'string' ? `
-											<pre class="report">${v.content}</pre>
+											<pre class="report report-message">${v.content}</pre>
 										` : `
 											<div class="report">
 												${v.content.report_type}<br>
@@ -225,7 +265,7 @@ export default class ExercisePanel {
 															${v.tests.map(v => `
 																<div>
 																	<h4>${v.name} - <span class="score ${v.score >= v.max ? 'success' : v.score === 0 ? 'fail' : 'almost'}">${v.score}/${v.max} pont</span></h4>
-																	${v.message ? `<pre class="message">${v.message}</pre>` : ''}
+																	${v.message ? `<pre class="report-message">${v.message}</pre>` : ''}
 																</div>
 															`).join('')}
 														</div>
@@ -244,7 +284,7 @@ export default class ExercisePanel {
                                 `).join('')}
                             </div>` : 'no files'}
 						</div>
-					`).join()}
+					`).reverse().join('')}
 				</div>
 
 				<script nonce="${nonce}" src="${this.panel.webview.asWebviewUri(vscode.Uri.joinPath(this.extensionUri, 'assets', 'main.js'))}"></script>

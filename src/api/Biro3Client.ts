@@ -110,6 +110,25 @@ export class Biro3Client {
         return d
     }
 
+    async _fetch(promise: Promise<Response>): Promise<Response> {
+        let res
+        try {
+            res = await promise
+        } catch (error) {
+            if (String(error) === "TypeError: fetch failed") {
+                throw new Error(`Ajaj`)
+            } else {
+                throw error
+            }
+        }
+
+        if (!res.ok) {
+            throw await ApiError.fromResponse(res)
+        }
+
+        return res
+    }
+
     async get(url: string): Promise<Response> {
         let headers: Record<string, string> = {
             'Accept': 'application/json, text/plain, */*',
@@ -129,12 +148,12 @@ export class Biro3Client {
         }
 
         log.debug(`GET ${url}`)
-        const res = await fetch(url, {
+        const res = await this._fetch(fetch(url, {
             credentials: 'include',
             headers: headers,
             method: 'GET',
             mode: 'cors'
-        })
+        }))
 
         if (!res.ok) {
             throw await ApiError.fromResponse(res)
@@ -169,7 +188,7 @@ export class Biro3Client {
         }
 
         log.debug(`POST ${url}\n${body}`)
-        const res = await fetch(url, {
+        const res = await this._fetch(fetch(url, {
             credentials: 'include',
             headers: {
                 ..._headers,
@@ -178,11 +197,7 @@ export class Biro3Client {
             body: body,
             method: 'POST',
             mode: 'cors'
-        })
-
-        if (!res.ok) {
-            throw await ApiError.fromResponse(res)
-        }
+        }))
 
         this.refreshToken = parseCookies(res)['refresh-token'] ?? this.refreshToken
 
@@ -249,6 +264,16 @@ export class Biro3Client {
     }
 
     //#endregion
+
+    public refresh() {
+        this.subjectInstances = null
+        this.assignments = {}
+        this.assignmentDetails = {}
+        this.exercises = {}
+        this.submissionStatuses = {}
+        this.reports = {}
+        this.submissionFiles = {}
+    }
 
     async getSubjectInstance(instanceId: number) {
         return this.subjectInstances?.[instanceId] ?? (await this.fetchSubjectInstances())[instanceId]

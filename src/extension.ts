@@ -18,8 +18,9 @@ export function activate(context: vscode.ExtensionContext) {
     const exerciseStatusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0)
     exerciseStatusItem.hide()
 
+    const coursesViewProvider = new BiroExplorerProvider(client, context.extensionUri)
     vscode.window.createTreeView('biro-courses', {
-        treeDataProvider: new BiroExplorerProvider(client, context.extensionUri)
+        treeDataProvider: coursesViewProvider
     })
 
 
@@ -70,11 +71,17 @@ export function activate(context: vscode.ExtensionContext) {
                 return
             }
         }
+
         log.debug(`Uploading file ...`)
-        await client.submitFile(exercise.assignedExerciseId, path.basename(document.fileName), document.getText())
+        await vscode.window.withProgress({
+            location: vscode.ProgressLocation.Notification,
+            cancellable: false,
+            title: `Fájl feltöltése`,
+        }, () => client.withReauth(() => client.submitFile(exercise.assignedExerciseId, path.basename(document.fileName), document.getText())))
+        log.debug(`File uploaded`)
+
         delete client.exercises[exercise.assignedExerciseId]
         exercisePanel?.reveal(exercise.assignedExerciseId)
-        log.debug(`File uploaded`)
     }))
 
     vscode.workspace.registerTextDocumentContentProvider('birosubmission', new class implements vscode.TextDocumentContentProvider {
@@ -94,6 +101,12 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('vscbiro.openSubmittedFile', async (submissionId: number, filename: string) => {
         const doc = await vscode.workspace.openTextDocument(vscode.Uri.parse(`birosubmission:${filename}?${submissionId}`))
         await vscode.window.showTextDocument(doc, { preview: true })
+    }))
+
+    context.subscriptions.push(vscode.commands.registerCommand('vscbiro.refresh', async (fileUri: vscode.Uri) => {
+        client.refresh()
+        coursesViewProvider.refresh()
+        await exercisePanel?.update(true)
     }))
 
     if (vscode.window.registerWebviewPanelSerializer) {

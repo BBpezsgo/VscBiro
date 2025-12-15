@@ -28,6 +28,11 @@
   "contributes": {
     "commands": [
       {
+        "command": "vscbiro.refresh",
+        "title": "Frissítés",
+        "icon": "$(refresh)"
+      },
+      {
         "command": "vscbiro.selectExercise",
         "title": "Feladat megnyitása"
       },
@@ -61,6 +66,13 @@
       ]
     },
     "menus": {
+      "view/title": [
+        {
+          "command": "vscbiro.refresh",
+          "when": "view == 'biro-courses'",
+          "group": "navigation"
+        }
+      ],
       "editor/title": [
         {
           "command": "vscbiro.submit",

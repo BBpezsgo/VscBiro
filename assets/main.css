@@ -42,14 +42,14 @@ img.story {
     display: block;
 }
 
+.submission,
 .file,
 .report {
     margin-top: 8px;
     margin-bottom: 8px;
 }
 
-.report .message,
-.file .content {
+.report-message {
 	font-size: var(--vscode-editor-font-size);
 	font-family: var(--vscode-editor-font-family);
     background-color: var(--vscode-textPreformat-background);
@@ -58,6 +58,17 @@ img.story {
     word-wrap: break-word;
     text-wrap: auto;
     margin: 0px;
+}
+
+.file-link {
+	color: var(--vscode-textLink-foreground);
+    cursor: pointer;
+}
+
+.file-link:hover,
+.file-link:active {
+	color: var(--vscode-textLink-activeForeground);
+    text-decoration: underline;
 }
 
 .submission {
@@ -71,12 +82,6 @@ img.story {
 
 .submission h4 {
     margin: 4px;
-}
-
-.submission h3 .submission-score,
-.submission h3 .submission-time {
-    font-weight: 500;
-    color: var(--vscode-descriptionForeground);
 }
 
 .score.success {
@@ -98,4 +103,16 @@ img.story {
     border-radius: 4px;
     padding: 0px 5px;
     font-size: 1rem;
+}
+
+.assignment-locked {
+    border: 1px solid var(--vscode-editorError-foreground);
+    padding: 8px;
+    margin: 16px 0;
+    color: var(--vscode-editorError-foreground);
+    background-color: color-mix(in srgb, var(--vscode-editorError-foreground) 10%, transparent);
+}
+
+.assignment-locked > h2 {
+    margin: 0px;
 }

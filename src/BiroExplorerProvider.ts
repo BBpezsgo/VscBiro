@@ -1,5 +1,7 @@
 import * as vscode from 'vscode'
 import { Biro3Client } from './api/Biro3Client'
+import { isAssignmentLocked } from './utils'
+import { log } from './extension'
 
 export class BiroExplorerProvider implements vscode.TreeDataProvider<string> {
     readonly client: Biro3Client
@@ -38,7 +40,7 @@ export class BiroExplorerProvider implements vscode.TreeDataProvider<string> {
                 const item = new vscode.TreeItem(assignment.assignmentName, vscode.TreeItemCollapsibleState.Collapsed)
                 item.description = assignment.assignmentDescription
                 item.id = element
-                if (assignment.postDeadlineHandling === "LOCKED") {
+                if (isAssignmentLocked(assignment) && assignment.postDeadlineHandling === "LOCKED") {
                     item.collapsibleState = vscode.TreeItemCollapsibleState.None
                     item.tooltip = "This assignment is locked"
                     item.iconPath = vscode.Uri.joinPath(this.extensionRoot, 'assets', 'lock.svg')
@@ -50,6 +52,8 @@ export class BiroExplorerProvider implements vscode.TreeDataProvider<string> {
                     item.iconPath = vscode.Uri.joinPath(this.extensionRoot, 'assets', 'in-progress.svg')
                 } else if (assignment.score < assignment.maxScore) {
                     item.iconPath = vscode.Uri.joinPath(this.extensionRoot, 'assets', 'error.svg')
+                } else {
+                    log.error(`Unreachable`)
                 }
                 return item
             }
@@ -61,7 +65,7 @@ export class BiroExplorerProvider implements vscode.TreeDataProvider<string> {
 
             const exercise = this.client.assignmentDetails[assignmentAssignedStudentId]?.exerciseStatuses.find(v => v.assignedExerciseId === exerciseId)
             if (exercise) {
-                const item = new vscode.TreeItem(`${exercise.exerciseIndex}. feladat`, vscode.TreeItemCollapsibleState.Collapsed)
+                const item = new vscode.TreeItem(`${exercise.exerciseIndex}. feladat`, vscode.TreeItemCollapsibleState.None)
                 item.id = element
                 if (exercise.exerciseState === "COMPLETED") {
                     item.iconPath = vscode.Uri.joinPath(this.extensionRoot, 'assets', 'in-progress.svg')
@@ -72,7 +76,7 @@ export class BiroExplorerProvider implements vscode.TreeDataProvider<string> {
                 } else if (exercise.exerciseState === "NO_SUBMISSION") {
                     item.iconPath = vscode.Uri.joinPath(this.extensionRoot, 'assets', 'no-submission.svg')
                 } else {
-                    item.iconPath = vscode.Uri.joinPath(this.extensionRoot, 'assets', 'no-submission.svg')
+                    log.error(`Exercise status "${exercise.exerciseState}" not implemented`)
                 }
                 item.command = {
                     command: "vscbiro.selectExercise",
@@ -106,7 +110,7 @@ export class BiroExplorerProvider implements vscode.TreeDataProvider<string> {
             const assignmentAssignedStudentId = Number.parseInt(parts[1])
 
             const assignment = await this.client.withReauth(() => this.client.getAssignment(assignmentAssignedStudentId))
-            if (assignment.assignmentDetails.postDeadlineHandling === "LOCKED") {
+            if (isAssignmentLocked(assignment.assignmentDetails) && assignment.assignmentDetails.postDeadlineHandling === "LOCKED") {
                 return Promise.resolve([])
             }
             return assignment.exerciseStatuses.map(v => `${subjectInstanceId}-${assignmentAssignedStudentId}-${v.assignedExerciseId}`)
